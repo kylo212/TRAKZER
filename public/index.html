@@ -3,14 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trakzer App</title>
+  <title>Trakzer App - Home</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Welcome to Trakzer App</h1>
-  <p>Go to the map or DM page:</p>
-  <ul>
-    <li><a href="/map">Go to Map</a></li>
-    <li><a href="/dm">Go to Direct Messages</a></li>
-  </ul>
+  <header>
+    <div id="logo">
+      <h1>Trakzer</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/map">Map</a></li>
+        <li><a href="/dm">Direct Messages</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div id="post-section">
+      <h2>Create a Post</h2>
+      <div id="post-form">
+        <textarea id="post-input" placeholder="What's on your mind?" rows="4"></textarea>
+        <button id="post-btn">Post</button>
+      </div>
+      <div id="posts-container">
+        <div class="post">
+          <div class="post-header">
+            <span class="username">User1</span>
+            <span class="timestamp">Just now</span>
+          </div>
+          <div class="post-content">
+            <p>This is a sample post!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Trakzer App</p>
+  </footer>
+
+  <script>
+    const postButton = document.getElementById('post-btn');
+    const postInput = document.getElementById('post-input');
+    const postsContainer = document.getElementById('posts-container');
+
+    postButton.addEventListener('click', () => {
+      const postText = postInput.value;
+      if (postText) {
+        const postElement = document.createElement('div');
+        postElement.classList.add('post');
+        
+        const postHeader = document.createElement('div');
+        postHeader.classList.add('post-header');
+        postHeader.innerHTML = `<span class="username">User</span> <span class="timestamp">Just now</span>`;
+        
+        const postContent = document.createElement('div');
+        postContent.classList.add('post-content');
+        postContent.innerHTML = `<p>${postText}</p>`;
+        
+        postElement.appendChild(postHeader);
+        postElement.appendChild(postContent);
+        
+        postsContainer.prepend(postElement);
+        postInput.value = '';
+      }
+    });
+  </script>
 </body>
 </html>
