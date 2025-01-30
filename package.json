@@ -11,6 +11,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.17.3",
+    "leaflet": "^1.9.4",
     "mongoose": "^6.0.13"
   },
   "devDependencies": {

@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
@@ -24,8 +25,10 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/users', userRoutes);
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', (req, res) => {
-  res.send('Welcome to the Trakzer API!');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
