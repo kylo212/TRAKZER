@@ -25,7 +25,8 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/users', userRoutes);
 
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+app.get('/map', (req, res) => res.sendFile(path.join(__dirname, 'public', 'map.html')));
+app.get('/dm', (req, res) => res.sendFile(path.join(__dirname, 'public', 'dm.html')));
 
 io.on('connection', (socket) => {
   console.log('a user connected');

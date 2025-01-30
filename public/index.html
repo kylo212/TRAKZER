@@ -4,47 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trakzer App</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="map" style="height: 50vh;"></div>
-  <div id="chat-container">
-    <div id="messages"></div>
-    <div id="input-container">
-      <input type="text" id="message-input" placeholder="Type a message...">
-      <button id="send-btn">Send</button>
-    </div>
-  </div>
-  
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-    const map = L.map('map').setView([51.505, -0.09], 13);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    L.marker([51.505, -0.09]).addTo(map)
-      .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-      .openPopup();
-
-    document.getElementById('send-btn').addEventListener('click', () => {
-      const message = document.getElementById('message-input').value;
-      if (message) {
-        socket.emit('sendMessage', message);
-        document.getElementById('message-input').value = '';
-      }
-    });
-
-    socket.on('receiveMessage', (message) => {
-      const messageElement = document.createElement('div');
-      messageElement.classList.add('message');
-      messageElement.innerText = message;
-      document.getElementById('messages').appendChild(messageElement);
-    });
-  </script>
+  <h1>Welcome to Trakzer App</h1>
+  <p>Go to the map or DM page:</p>
+  <ul>
+    <li><a href="/map">Go to Map</a></li>
+    <li><a href="/dm">Go to Direct Messages</a></li>
+  </ul>
 </body>
 </html>
