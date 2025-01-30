@@ -1,30 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trakzer Map</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-</head>
-<body>
-  <div id="map" style="width: 100%; height: 100vh;"></div>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    var map = L.map('map').setView([51.505, -0.09], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+process.on('warning', (warning) => console.warn(warning.name, warning.message));
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const path = require('path');
 
-    var socket = io();
+const app = express();
 
-    socket.on('connect', function() {
-      console.log('Connected to server');
-    });
+app.use(cors());
+app.use(express.json());
 
-    socket.on('message', function(msg) {
-      console.log('Message from server:', msg);
-    });
-  </script>
-</body>
-</html>
+const dbURI = process.env.MONGODB_URI;
+
+mongoose.set('strictQuery', false);
+
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log("Successfully connected to MongoDB!");
+  })
+  .catch((err) => {
+    console.log("Error connecting to MongoDB:", err);
+  });
+
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/users', userRoutes);
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
