@@ -1,8 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f0f2f5;
-  margin: 0;
-  padding: 0;
+}
+
+#container {
+  display: flex;
+  overflow: hidden;
+  width: 300%;
+  transition: transform 0.5s ease;
+}
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: white;
+  flex-shrink: 0;
 }
 
 header {
@@ -33,12 +52,6 @@ header nav ul li a {
   color: white;
   text-decoration: none;
   font-weight: bold;
-}
-
-main {
-  padding: 20px;
-  max-width: 1200px;
-  margin: auto;
 }
 
 footer {
@@ -110,4 +123,44 @@ footer {
 .post-content p {
   margin: 0;
   font-size: 14px;
+}
+
+.post-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.react-btn, .comment-btn, .share-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.react-btn {
+  color: #1877f2;
+}
+
+.comment-btn, .share-btn {
+  color: #4b4b4b;
+}
+
+.react-btn:hover, .comment-btn:hover, .share-btn:hover {
+  text-decoration: underline;
+}
+
+.comments {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.comment {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.comment .username {
+  font-weight: bold;
+  color: #1877f2;
 }
