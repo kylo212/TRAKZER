@@ -9,158 +9,107 @@ body {
   background-color: #f0f2f5;
 }
 
-#container {
-  display: flex;
-  overflow: hidden;
-  width: 300%;
-  transition: transform 0.5s ease;
-}
-
-.page {
-  width: 100%;
-  min-height: 100vh;
-  padding: 20px;
-  background-color: white;
-  flex-shrink: 0;
-}
-
 header {
-  background-color: #1877f2;
+  background-color: #0084ff;
+  color: white;
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-header #logo h1 {
-  color: white;
+#logo h1 {
   margin: 0;
 }
 
-header nav ul {
+nav ul {
   list-style: none;
-  margin: 0;
-  padding: 0;
   display: flex;
+  gap: 15px;
 }
 
-header nav ul li {
-  margin-left: 20px;
-}
-
-header nav ul li a {
+nav a {
   color: white;
   text-decoration: none;
   font-weight: bold;
 }
 
-footer {
-  background-color: #1877f2;
-  text-align: center;
-  color: white;
+#chat-container {
+  display: flex;
+  height: 80vh;
+}
+
+#contacts {
+  width: 25%;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
   padding: 10px;
+  overflow-y: auto;
 }
 
-#post-section {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.contact {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
 }
 
-#post-form {
-  margin-bottom: 20px;
+.contact:hover {
+  background-color: #f1f1f1;
 }
 
-#post-input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+.contact-info .contact-name {
   font-size: 16px;
 }
 
-#post-btn {
-  padding: 12px 20px;
-  background-color: #32cd32;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+#chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 20px;
 }
 
-#post-btn:hover {
-  background-color: #28a428;
+#messages {
+  flex: 1;
+  overflow-y: auto;
 }
 
-#posts-container {
-  margin-top: 20px;
+.message {
+  background-color: #f1f1f1;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 60%;
 }
 
-.post {
-  background-color: #f5f6f7;
-  margin-bottom: 20px;
-  padding: 15px;
-  border-radius: 10px;
+#input-container {
+  display: flex;
+  gap: 10px;
+}
+
+#message-input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 20px;
   border: 1px solid #ddd;
 }
 
-.post-header {
-  font-weight: bold;
-  display: flex;
-  justify-content: space-between;
-}
-
-.username {
-  color: #1877f2;
-}
-
-.timestamp {
-  color: #808080;
-}
-
-.post-content p {
-  margin: 0;
-  font-size: 14px;
-}
-
-.post-actions {
-  margin-top: 15px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.react-btn, .comment-btn, .share-btn {
-  background-color: transparent;
+#send-btn {
+  padding: 10px 15px;
+  background-color: #0084ff;
+  color: white;
   border: none;
+  border-radius: 20px;
   cursor: pointer;
-  font-size: 14px;
 }
 
-.react-btn {
-  color: #1877f2;
+#send-btn:hover {
+  background-color: #0073e6;
 }
 
-.comment-btn, .share-btn {
-  color: #4b4b4b;
-}
-
-.react-btn:hover, .comment-btn:hover, .share-btn:hover {
-  text-decoration: underline;
-}
-
-.comments {
-  margin-top: 10px;
-  margin-left: 20px;
-}
-
-.comment {
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-.comment .username {
-  font-weight: bold;
-  color: #1877f2;
+footer {
+  background-color: #0084ff;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
 }

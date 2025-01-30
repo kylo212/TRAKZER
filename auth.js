@@ -5,14 +5,12 @@ const cors = require('cors');
 const path = require('path');
 const http = require('http');
 const socketIo = require('socket.io');
-const helmet = require('helmet');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
 app.use(cors());
-app.use(helmet());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -27,15 +25,11 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/users', userRoutes);
 
-const postsRoutes = require('./routes/posts');
-app.use('/api/posts', postsRoutes);
+const authRoutes = require('./auth');
+app.use('/api/auth', authRoutes);
 
 app.get('/map', (req, res) => res.sendFile(path.join(__dirname, 'public', 'map.html')));
 app.get('/dm', (req, res) => res.sendFile(path.join(__dirname, 'public', 'dm.html')));
-
-app.use((req, res) => {
-  res.status(404).json({ success: false, message: 'Route not found' });
-});
 
 io.on('connection', (socket) => {
   console.log('a user connected');
@@ -44,9 +38,4 @@ io.on('connection', (socket) => {
   });
 
   socket.on('sendMessage', (message) => {
-    io.emit('receiveMessage', message);
-  });
-});
-
-const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+    io.emi

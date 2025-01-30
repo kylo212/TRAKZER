@@ -3,132 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trakzer App</title>
+  <title>Trakzer App - Home</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="container">
-    <div class="page" id="index-page">
-      <h2>Home Page</h2>
-      <div id="post-section">
-        <h2>Create a Post</h2>
-        <div id="post-form">
-          <textarea id="post-input" placeholder="What's on your mind?" rows="4"></textarea>
-          <button id="post-btn">Post</button>
-        </div>
-        <div id="posts-container">
-          <div class="post">
-            <div class="post-header">
-              <span class="username">User1</span>
-              <span class="timestamp">Just now</span>
-            </div>
-            <div class="post-content">
-              <p>This is a sample post!</p>
-            </div>
-            <div class="post-actions">
-              <button class="react-btn">👍 Like</button>
-              <button class="react-btn">❤️ Love</button>
-              <button class="react-btn">😮 Wow</button>
-              <button class="react-btn">😢 Sad</button>
-              <button class="react-btn">😡 Angry</button>
-              <button class="comment-btn">Comment</button>
-              <button class="share-btn">Share</button>
-            </div>
-            <div class="comments">
-              <div class="comment">
-                <span class="username">User2</span>: Great post!
-              </div>
-              <div class="comment">
-                <span class="username">User3</span>: I agree with you!
-              </div>
-            </div>
-          </div>
-        </div>
+  <header>
+    <div id="logo">
+      <h1>Trakzer</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/map">Map</a></li>
+        <li><a href="/dm">Direct Messages</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div id="post-section">
+      <h2>Create a Post</h2>
+      <div id="post-form">
+        <textarea id="post-input" placeholder="What's on your mind?" rows="4"></textarea>
+        <button id="post-btn">Post</button>
       </div>
+      <div id="posts-container"></div>
     </div>
-
-    <div class="page" id="dm-page">
-      <h2>Direct Messages</h2>
-      <p>DMs section will go here.</p>
-    </div>
-
-    <div class="page" id="map-page">
-      <h2>Map</h2>
-      <p>Map page will go here.</p>
-    </div>
-  </div>
+  </main>
 
   <footer>
     <p>&copy; 2025 Trakzer App</p>
   </footer>
 
   <script>
-    let currentPage = 0;
-    const pages = document.querySelectorAll('.page');
-    
-    function showPage(index) {
-      pages.forEach((page, i) => {
-        page.style.transform = `translateX(${(i - index) * 100}%)`;
-      });
-    }
-
-    showPage(currentPage);
-
     const postButton = document.getElementById('post-btn');
     const postInput = document.getElementById('post-input');
     const postsContainer = document.getElementById('posts-container');
+    const username = 'User';
 
-    postButton.addEventListener('click', () => {
+    const displayPost = (postText, timestamp) => {
+      const postElement = document.createElement('div');
+      postElement.classList.add('post');
+      const postHeader = document.createElement('div');
+      postHeader.classList.add('post-header');
+      postHeader.innerHTML = `<span class="username">${username}</span> <span class="timestamp">${timestamp}</span>`;
+      const postContent = document.createElement('div');
+      postContent.classList.add('post-content');
+      postContent.innerHTML = `<p>${postText}</p>`;
+      postElement.appendChild(postHeader);
+      postElement.appendChild(postContent);
+      postsContainer.prepend(postElement);
+    };
+
+    postButton.addEventListener('click', async () => {
       const postText = postInput.value;
       if (postText) {
-        const postElement = document.createElement('div');
-        postElement.classList.add('post');
-        
-        const postHeader = document.createElement('div');
-        postHeader.classList.add('post-header');
-        postHeader.innerHTML = `<span class="username">User</span> <span class="timestamp">Just now</span>`;
-        
-        const postContent = document.createElement('div');
-        postContent.classList.add('post-content');
-        postContent.innerHTML = `<p>${postText}</p>`;
-        
-        const postActions = document.createElement('div');
-        postActions.classList.add('post-actions');
-        postActions.innerHTML = `
-          <button class="react-btn">👍 Like</button>
-          <button class="react-btn">❤️ Love</button>
-          <button class="react-btn">😮 Wow</button>
-          <button class="react-btn">😢 Sad</button>
-          <button class="react-btn">😡 Angry</button>
-          <button class="comment-btn">Comment</button>
-          <button class="share-btn">Share</button>
-        `;
-        
-        const comments = document.createElement('div');
-        comments.classList.add('comments');
-        comments.innerHTML = `
-          <div class="comment"><span class="username">User2</span>: Great post!</div>
-          <div class="comment"><span class="username">User3</span>: I agree with you!</div>
-        `;
-        
-        postElement.appendChild(postHeader);
-        postElement.appendChild(postContent);
-        postElement.appendChild(postActions);
-        postElement.appendChild(comments);
-        
-        postsContainer.prepend(postElement);
+        const timestamp = new Date().toLocaleTimeString();
+        displayPost(postText, timestamp);
+        try {
+          await fetch('/api/posts', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, postText, timestamp }),
+          });
+        } catch (err) {
+          console.error('Error posting:', err);
+        }
         postInput.value = '';
       }
     });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') {
-        currentPage = (currentPage + 1) % pages.length;
+    window.addEventListener('load', async () => {
+      try {
+        const response = await fetch('/api/posts');
+        const posts = await response.json();
+        posts.forEach(post => {
+          displayPost(post.text, post.timestamp);
+        });
+      } catch (err) {
+        console.error('Error loading posts:', err);
       }
-      if (e.key === 'ArrowLeft') {
-        currentPage = (currentPage - 1 + pages.length) % pages.length;
-      }
-      showPage(currentPage);
     });
   </script>
 </body>

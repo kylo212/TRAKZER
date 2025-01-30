@@ -21,10 +21,25 @@
 
   <main>
     <div id="chat-container">
-      <div id="messages"></div>
-      <div id="input-container">
-        <input type="text" id="message-input" placeholder="Type a message...">
-        <button id="send-btn">Send</button>
+      <div id="contacts">
+        <div class="contact">
+          <div class="contact-info">
+            <span class="contact-name">John Doe</span>
+          </div>
+        </div>
+        <div class="contact">
+          <div class="contact-info">
+            <span class="contact-name">Jane Smith</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="chat">
+        <div id="messages"></div>
+        <div id="input-container">
+          <input type="text" id="message-input" placeholder="Type a message...">
+          <button id="send-btn">Send</button>
+        </div>
       </div>
     </div>
   </main>
@@ -36,6 +51,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
+
     document.getElementById('send-btn').addEventListener('click', () => {
       const message = document.getElementById('message-input').value;
       if (message) {
