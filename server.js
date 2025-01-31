@@ -24,14 +24,13 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Successfully connected to MongoDB'))
   .catch(err => console.log('Error connecting to MongoDB:', err))
 
-const User = require('./models/user')
+const User = require('./models/user')  // Ensure this path is correct
 
 app.post('/api/register', async (req, res) => {
   const { name, email, password } = req.body
   if (!name || !email || !password) return res.status(400).json({ message: 'All fields are required' })
   try {
-    const hashedPassword = await bcrypt.hash(password, 10)
-    const user = new User({ name, email, password: hashedPassword })
+    const user = new User({ name, email, password })
     await user.save()
     res.status(201).json({ message: 'User registered successfully' })
   } catch (error) {
@@ -45,7 +44,7 @@ app.post('/api/login', async (req, res) => {
   try {
     const user = await User.findOne({ email })
     if (!user) return res.status(401).json({ message: 'Invalid credentials' })
-    const isMatch = await bcrypt.compare(password, user.password)
+    const isMatch = await user.comparePassword(password)  // Use comparePassword method
     if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' })
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
     res.status(200).json({ message: 'Login successful', token })
@@ -57,7 +56,7 @@ app.post('/api/login', async (req, res) => {
 app.get('/map', (req, res) => res.sendFile(path.join(__dirname, 'public', 'map.html')))
 app.get('/dm', (req, res) => res.sendFile(path.join(__dirname, 'public', 'dm.html')))
 
-const postsRoutes = require('./routes/posts')
+const postsRoutes = require('./routes/posts')  // Ensure postsRoutes path is correct
 app.use('/api', postsRoutes)
 
 io.on('connection', socket => {
