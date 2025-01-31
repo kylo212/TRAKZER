@@ -7,6 +7,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
 const app = express();
 const server = http.createServer(app);
@@ -27,9 +28,13 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 const User = require('./models/User');
 
 const authenticate = require('./middleware/authenticate');
+const kyleRoutes = require('./routes/kyleRoutes');
+
+app.use('/api/kyle', kyleRoutes);
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'login.html')));
 app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'public', 'register.html')));
+app.get('/kyle', authenticate, (req, res) => res.sendFile(path.join(__dirname, 'public', 'kyle.html')));
 
 app.post('/api/register', async (req, res) => {
   const { name, email, password } = req.body;
@@ -67,14 +72,34 @@ app.use('/api', locationRoutes);
 
 io.on('connection', socket => {
   console.log('A user connected');
-  
   socket.on('disconnect', () => {
     console.log('User disconnected');
   });
-
   socket.on('sendMessage', (message) => {
     io.emit('receiveMessage', message);
   });
+});
+
+app.post('/api/kyle/ask-kyle', async (req, res) => {
+  const { message } = req.body;
+  if (!message) return res.status(400).json({ message: 'Message is required' });
+  try {
+    const response = await axios.post(
+      'https://api-inference.huggingface.co/models/gpt2',
+      { inputs: message },
+      {
+        headers: {
+          'Authorization': `Bearer ${process.env.HF_API_KEY}`,
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+    const answer = response.data.generated_text.trim();
+    res.status(200).json({ response: answer });
+  } catch (error) {
+    console.error('Error communicating with Hugging Face:', error);
+    res.status(500).json({ message: 'Error communicating with Kyle', error });
+  }
 });
 
 const PORT = process.env.PORT || 5000;
