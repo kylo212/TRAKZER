@@ -13,9 +13,12 @@
     </div>
     <nav>
       <ul>
-        <li><a href="/map">Map</a></li>
-        <li><a href="/dm">Direct Messages</a></li>
-        <li><a href="/profile">Profile</a></li>
+        <li><a href="/map" id="map-link">Map</a></li>
+        <li><a href="/dm" id="dm-link">Direct Messages</a></li>
+        <li><a href="/profile" id="profile-link">Profile</a></li>
+        <li><a href="/login" id="login-link" style="display:none;">Login</a></li>
+        <li><a href="/register" id="register-link" style="display:none;">Register</a></li>
+        <li><a href="/logout" id="logout-link" style="display:none;">Logout</a></li>
       </ul>
     </nav>
   </header>
@@ -36,17 +39,31 @@
   </footer>
 
   <script>
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      document.getElementById('login-link').style.display = 'none';
+      document.getElementById('register-link').style.display = 'none';
+      document.getElementById('logout-link').style.display = 'inline';
+      document.getElementById('map-link').href = '/map';
+      document.getElementById('dm-link').href = '/dm';
+      document.getElementById('profile-link').href = '/profile';
+    } else {
+      document.getElementById('login-link').style.display = 'inline';
+      document.getElementById('register-link').style.display = 'inline';
+      document.getElementById('logout-link').style.display = 'none';
+    }
+
     const postButton = document.getElementById('post-btn');
     const postInput = document.getElementById('post-input');
     const postsContainer = document.getElementById('posts-container');
-    const username = 'User';
 
     const displayPost = (postText, timestamp) => {
       const postElement = document.createElement('div');
       postElement.classList.add('post');
       const postHeader = document.createElement('div');
       postHeader.classList.add('post-header');
-      postHeader.innerHTML = `<span class="username">${username}</span> <span class="timestamp">${timestamp}</span>`;
+      postHeader.innerHTML = `<span class="username">User</span> <span class="timestamp">${timestamp}</span>`;
       const postContent = document.createElement('div');
       postContent.classList.add('post-content');
       postContent.innerHTML = `<p>${postText}</p>`;
@@ -65,8 +82,9 @@
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ username, postText, timestamp }),
+            body: JSON.stringify({ postText, timestamp })
           });
         } catch (err) {
           console.error('Error posting:', err);
@@ -85,6 +103,11 @@
       } catch (err) {
         console.error('Error loading posts:', err);
       }
+    });
+
+    document.getElementById('logout-link').addEventListener('click', () => {
+      localStorage.removeItem('token');
+      window.location.href = '/';
     });
   </script>
 </body>

@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register - Trakzer App</title>
+  <title>Login - Trakzer App</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="register-container">
-    <h2>Create an Account</h2>
-    <form id="register-form">
-      <input type="text" id="name" placeholder="Full Name" required>
+  <div id="login-container">
+    <h2>Login to Trakzer</h2>
+    <form id="login-form">
       <input type="email" id="email" placeholder="Email" required>
       <input type="password" id="password" placeholder="Password" required>
-      <button type="submit">Register</button>
+      <button type="submit">Login</button>
     </form>
+    <p>Don't have an account? <a href="/register">Register</a></p>
     <div id="error-message" style="color: red; display: none;"></div>
   </div>
 
@@ -23,26 +23,26 @@
   </footer>
 
   <script>
-    document.getElementById('register-form').addEventListener('submit', function(event) {
+    document.getElementById('login-form').addEventListener('submit', function(event) {
       event.preventDefault();
-      const name = document.getElementById('name').value;
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
-      fetch('/api/register', {
+      fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, email, password })
+        body: JSON.stringify({ email, password })
       })
       .then(response => response.json())
       .then(data => {
-        if (data.message === 'User registered successfully') {
-          window.location.href = '/login';
+        if (data.message === 'Login successful') {
+          localStorage.setItem('token', data.token);
+          window.location.href = '/map'; // Redirect to map page after login
         } else {
           document.getElementById('error-message').style.display = 'block';
-          document.getElementById('error-message').textContent = data.message || 'Registration failed';
+          document.getElementById('error-message').textContent = data.message || 'Login failed';
         }
       })
       .catch(error => {
