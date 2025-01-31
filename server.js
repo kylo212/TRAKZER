@@ -26,6 +26,20 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const User = require('./models/User')
 
+const authenticate = (req, res, next) => {
+  const token = req.header('Authorization')?.replace('Bearer ', '')
+  if (!token) {
+    return res.status(401).json({ message: 'No token, authorization denied' })
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    req.user = decoded.userId
+    next()
+  } catch (error) {
+    return res.status(401).json({ message: 'Token is not valid' })
+  }
+}
+
 app.post('/api/register', async (req, res) => {
   const { name, email, password } = req.body
   if (!name || !email || !password) return res.status(400).json({ message: 'All fields are required' })
@@ -54,8 +68,8 @@ app.post('/api/login', async (req, res) => {
   }
 })
 
-app.get('/map', (req, res) => res.sendFile(path.join(__dirname, 'public', 'map.html')))
-app.get('/dm', (req, res) => res.sendFile(path.join(__dirname, 'public', 'dm.html')))
+app.get('/map', authenticate, (req, res) => res.sendFile(path.join(__dirname, 'public', 'map.html')))
+app.get('/dm', authenticate, (req, res) => res.sendFile(path.join(__dirname, 'public', 'dm.html')))
 
 const postsRoutes = require('./routes/posts')
 app.use('/api', postsRoutes)
