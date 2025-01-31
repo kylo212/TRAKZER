@@ -25,7 +25,11 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch(err => console.log('Error connecting to MongoDB:', err));
 
 const User = require('./models/User');
+
 const authenticate = require('./middleware/authenticate');
+
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'login.html')));
+app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'public', 'register.html')));
 
 app.post('/api/register', async (req, res) => {
   const { name, email, password } = req.body;
