@@ -24,7 +24,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Successfully connected to MongoDB'))
   .catch(err => console.log('Error connecting to MongoDB:', err))
 
-const User = require('./models/user')  // Ensure this path is correct
+const User = require('./models/User')  // Correct the path to User.js
 
 app.post('/api/register', async (req, res) => {
   const { name, email, password } = req.body
