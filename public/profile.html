@@ -1,44 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
-  <title>Trakzer - Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trakzer - Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <header>
+        <h1>Trakzer</h1>
+        <div class="profile-link">
+            <img src="images/profile.jpg" alt="Profile" width="40" height="40">
+        </div>
+    </header>
 
-  <div class="header">
-    <h1>Trakzer</h1>
-  </div>
-
-  <div class="container">
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="dms.html">DMs</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="marketplace.html">Marketplace</a></li>
-        <li><a href="post.html">Create Post</a></li>
-      </ul>
-    </nav>
-
-    <div id="profile" class="page">
-      <h2>Your Profile</h2>
-      <form action="/api/user/update" method="POST">
-        <input type="text" name="name" placeholder="Your Name" required><br>
-        <input type="email" name="email" placeholder="Your Email" required><br>
-        <textarea name="bio" placeholder="Your Bio" rows="4"></textarea><br>
-        <button type="submit">Update Profile</button>
-      </form>
+    <div class="sidebar">
+        <ul>
+            <li><i class="fas fa-home"></i> Home</li>
+            <li><i class="fas fa-users"></i> Friends</li>
+            <li><i class="fas fa-comments"></i> Messages</li>
+            <li><i class="fas fa-cogs"></i> Settings</li>
+        </ul>
     </div>
-  </div>
 
-  <div class="footer">
-    <footer>
-      <p>&copy; 2025 Trakzer</p>
-    </footer>
-  </div>
+    <div class="main-content">
+        <div class="profile">
+            <img src="images/profile.jpg" alt="Profile Picture">
+            <h2>John Doe</h2>
+            <p class="bio">Web Developer | Tech Enthusiast | Traveler</p>
+            <button><i class="fas fa-edit"></i> Edit Profile</button>
+        </div>
+    </div>
 
+    <script src="js/script.js"></script>
 </body>
 </html>

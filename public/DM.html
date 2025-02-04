@@ -1,45 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
-  <title>Trakzer - DM</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trakzer - Messages</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <header>
+        <h1>Trakzer</h1>
+        <div class="profile-link">
+            <img src="images/profile.jpg" alt="Profile" width="40" height="40">
+        </div>
+    </header>
 
-  <div class="header">
-    <h1>Trakzer</h1>
-  </div>
-
-  <div class="container">
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="dm.html">DM</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="trakzershop.html">TrakzerShop</a></li>
-        <li><a href="post.html">Create Post</a></li>
-      </ul>
-    </nav>
-
-    <div id="dm" class="page">
-      <h2>Direct Messages</h2>
-      <form action="/api/messages" method="POST">
-        <textarea name="message" placeholder="Type a message..." rows="4"></textarea><br>
-        <button type="submit">Send</button>
-      </form>
-      <div class="message-list">
-        <p>Messages will appear here.</p>
-      </div>
+    <div class="sidebar">
+        <ul>
+            <li><i class="fas fa-home"></i> Home</li>
+            <li><i class="fas fa-users"></i> Friends</li>
+            <li><i class="fas fa-comments"></i> Messages</li>
+            <li><i class="fas fa-cogs"></i> Settings</li>
+        </ul>
     </div>
-  </div>
 
-  <div class="footer">
-    <footer>
-      <p>&copy; 2025 Trakzer</p>
-    </footer>
-  </div>
+    <div class="main-content">
+        <h2>Messages</h2>
+        <div class="chat-container">
+            <div class="chat-bubble">Hi, how are you?</div>
+            <div class="chat-bubble received">I'm doing well, thanks!</div>
+        </div>
+        <input type="text" id="message-input" class="chat-input" placeholder="Type a message...">
+        <button id="send-btn" class="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
+    </div>
 
+    <script src="js/script.js"></script>
 </body>
 </html>
