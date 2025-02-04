@@ -29,9 +29,9 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.error('Error connecting to MongoDB:', err));
 
-const authController = require('./controllers/authController');
 const messageController = require('./controllers/messageController');
 const postController = require('./controllers/postController');
+const authController = require('./controllers/authController');  // Import the authController
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -57,8 +57,10 @@ app.get('/map', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'map.html'));
 });
 
+// Re-add the routes for register and login
 app.post('/api/register', authController.register);
 app.post('/api/login', authController.login);
+
 app.post('/api/messages', messageController.createMessage);
 app.get('/api/messages', messageController.getMessages);
 app.post('/api/posts', postController.createPost);
