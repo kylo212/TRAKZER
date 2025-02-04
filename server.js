@@ -20,9 +20,14 @@ process.removeAllListeners('warning');
 mongoose.set('strictQuery', false);
 
 const dbURI = process.env.MONGODB_URI;
+if (!dbURI) {
+    console.error('MONGODB_URI is missing in environment variables');
+    process.exit(1);
+}
+
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
-    .catch((err) => console.log('Error connecting to MongoDB:', err));
+    .catch((err) => console.error('Error connecting to MongoDB:', err));
 
 const authController = require('./controllers/authController');
 const messageController = require('./controllers/messageController');
@@ -54,15 +59,14 @@ app.get('/map', (req, res) => {
 
 app.post('/api/register', authController.register);
 app.post('/api/login', authController.login);
-
 app.post('/api/messages', messageController.createMessage);
 app.get('/api/messages', messageController.getMessages);
-
 app.post('/api/posts', postController.createPost);
 app.get('/api/posts', postController.getPosts);
 
 io.on('connection', (socket) => {
     console.log('New user connected');
+    
     socket.on('sendMessage', (messageData) => {
         io.emit('newMessage', messageData);
     });
@@ -73,7 +77,7 @@ io.on('connection', (socket) => {
 });
 
 app.use((err, req, res, next) => {
-    console.error(err.stack);
+    console.error('Unexpected Error:', err.stack);
     res.status(500).send('Something went wrong!');
 });
 
