@@ -31,7 +31,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const messageController = require('./controllers/messageController');
 const postController = require('./controllers/postController');
-const authController = require('./controllers/authController');  // Import the authController
+const authController = require('./controllers/authController');
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -57,7 +57,6 @@ app.get('/map', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'map.html'));
 });
 
-// Re-add the routes for register and login
 app.post('/api/register', authController.register);
 app.post('/api/login', authController.login);
 
