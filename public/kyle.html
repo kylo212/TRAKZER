@@ -1,37 +1,42 @@
-<html>
-  <head>
-    <title>Chat with Kyle</title>
-  </head>
-  <body>
-    <h1>Chat with Kyle</h1>
-    <textarea id="messageInput" placeholder="Ask Kyle something..."></textarea>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kyle the Bot</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="chat-container">
+    <h2>Talk to Kyle</h2>
+    <div id="chat-box" class="chat-box"></div>
+    <textarea id="user-message" placeholder="Type a message..."></textarea>
     <button onclick="sendMessage()">Send</button>
-    <div id="response"></div>
+  </div>
 
-    <script>
-      async function sendMessage() {
-        const message = document.getElementById('messageInput').value;
-        const responseDiv = document.getElementById('response');
+  <script>
+    async function sendMessage() {
+      const message = document.getElementById('user-message').value;
+      if (message.trim() === '') return;
 
-        try {
-          const res = await fetch('/api/kyle/ask-kyle', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message }),
-          });
+      const chatBox = document.getElementById('chat-box');
+      chatBox.innerHTML += `<div class="user-message">${message}</div>`;
+      document.getElementById('user-message').value = '';
 
-          const data = await res.json();
-          if (data.response) {
-            responseDiv.textContent = `Kyle says: ${data.response}`;
-          } else {
-            responseDiv.textContent = 'No response from Kyle.';
-          }
-        } catch (error) {
-          responseDiv.textContent = 'Error communicating with Kyle.';
-        }
-      }
-    </script>
-  </body>
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: message }),
+      });
+
+      const data = await response.json();
+      const botReply = data.reply;
+
+      chatBox.innerHTML += `<div class="bot-message">${botReply}</div>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+</body>
 </html>

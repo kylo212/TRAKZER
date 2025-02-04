@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
-  <title>Trakzer - DM</title>
+  <title>Trakzer - TrakzerShop</title>
 </head>
 <body>
 
@@ -23,14 +23,16 @@
       </ul>
     </nav>
 
-    <div id="dm" class="page">
-      <h2>Direct Messages</h2>
-      <form action="/api/messages" method="POST">
-        <textarea name="message" placeholder="Type a message..." rows="4"></textarea><br>
-        <button type="submit">Send</button>
+    <div id="trakzershop" class="page">
+      <h2>TrakzerShop</h2>
+      <form action="/api/marketplace" method="POST">
+        <input type="text" name="item" placeholder="Item name" required><br>
+        <input type="text" name="price" placeholder="Price" required><br>
+        <textarea name="description" placeholder="Item description" rows="4"></textarea><br>
+        <button type="submit">Post Item</button>
       </form>
-      <div class="message-list">
-        <p>Messages will appear here.</p>
+      <div class="item-list">
+        <p>Items available for sale will appear here.</p>
       </div>
     </div>
   </div>

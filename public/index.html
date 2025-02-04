@@ -3,112 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trakzer App - Home</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Trakzer - Home</title>
 </head>
 <body>
-  <header>
-    <div id="logo">
-      <h1>Trakzer</h1>
-    </div>
+
+  <div class="header">
+    <h1>Trakzer</h1>
+  </div>
+
+  <div class="container">
     <nav>
       <ul>
-        <li><a href="/map" id="map-link">Map</a></li>
-        <li><a href="/dm" id="dm-link">Direct Messages</a></li>
-        <li><a href="/profile" id="profile-link">Profile</a></li>
-        <li><a href="/login" id="login-link" style="display:none;">Login</a></li>
-        <li><a href="/register" id="register-link" style="display:none;">Register</a></li>
-        <li><a href="/logout" id="logout-link" style="display:none;">Logout</a></li>
+        <li><a href="#home" onclick="showPage('home')">Home</a></li>
+        <li><a href="#dms" onclick="showPage('dms')">DMs</a></li>
+        <li><a href="#profile" onclick="showPage('profile')">Profile</a></li>
+        <li><a href="#marketplace" onclick="showPage('marketplace')">Marketplace</a></li>
+        <li><a href="#post" onclick="showPage('post')">Create Post</a></li>
       </ul>
     </nav>
-  </header>
 
-  <main>
-    <div id="post-section">
-      <h2>Create a Post</h2>
-      <div id="post-form">
-        <textarea id="post-input" placeholder="What's on your mind?" rows="4"></textarea>
-        <button id="post-btn">Post</button>
-      </div>
-      <div id="posts-container"></div>
+    <div id="home" class="page">
+      <h2>Welcome to Trakzer</h2>
+      <p>Your social platform to connect, chat, and share.</p>
     </div>
-  </main>
 
-  <footer>
-    <p>&copy; 2025 Trakzer App</p>
-  </footer>
+    <div id="dms" class="page" style="display:none;">
+      <h2>Direct Messages</h2>
+      <p>Chat with your friends privately.</p>
+    </div>
+
+    <div id="profile" class="page" style="display:none;">
+      <h2>Your Profile</h2>
+      <p>View and update your personal details here.</p>
+    </div>
+
+    <div id="marketplace" class="page" style="display:none;">
+      <h2>Marketplace</h2>
+      <p>Buy, sell, or trade items with others.</p>
+    </div>
+
+    <div id="post" class="page" style="display:none;">
+      <h2>Create a Post</h2>
+      <form action="/api/posts" method="POST">
+        <textarea name="content" placeholder="What's on your mind?" rows="4"></textarea><br>
+        <button type="submit">Post</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer">
+    <footer>
+      <p>&copy; 2025 Trakzer</p>
+    </footer>
+  </div>
 
   <script>
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      document.getElementById('login-link').style.display = 'none';
-      document.getElementById('register-link').style.display = 'none';
-      document.getElementById('logout-link').style.display = 'inline';
-      document.getElementById('map-link').href = '/map';
-      document.getElementById('dm-link').href = '/dm';
-      document.getElementById('profile-link').href = '/profile';
-    } else {
-      document.getElementById('login-link').style.display = 'inline';
-      document.getElementById('register-link').style.display = 'inline';
-      document.getElementById('logout-link').style.display = 'none';
+    function showPage(page) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(p => p.style.display = 'none');
+      document.getElementById(page).style.display = 'block';
     }
-
-    const postButton = document.getElementById('post-btn');
-    const postInput = document.getElementById('post-input');
-    const postsContainer = document.getElementById('posts-container');
-
-    const displayPost = (postText, timestamp) => {
-      const postElement = document.createElement('div');
-      postElement.classList.add('post');
-      const postHeader = document.createElement('div');
-      postHeader.classList.add('post-header');
-      postHeader.innerHTML = `<span class="username">User</span> <span class="timestamp">${timestamp}</span>`;
-      const postContent = document.createElement('div');
-      postContent.classList.add('post-content');
-      postContent.innerHTML = `<p>${postText}</p>`;
-      postElement.appendChild(postHeader);
-      postElement.appendChild(postContent);
-      postsContainer.prepend(postElement);
-    };
-
-    postButton.addEventListener('click', async () => {
-      const postText = postInput.value;
-      if (postText) {
-        const timestamp = new Date().toLocaleTimeString();
-        displayPost(postText, timestamp);
-        try {
-          await fetch('/api/posts', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ postText, timestamp })
-          });
-        } catch (err) {
-          console.error('Error posting:', err);
-        }
-        postInput.value = '';
-      }
-    });
-
-    window.addEventListener('load', async () => {
-      try {
-        const response = await fetch('/api/posts');
-        const posts = await response.json();
-        posts.forEach(post => {
-          displayPost(post.text, post.timestamp);
-        });
-      } catch (err) {
-        console.error('Error loading posts:', err);
-      }
-    });
-
-    document.getElementById('logout-link').addEventListener('click', () => {
-      localStorage.removeItem('token');
-      window.location.href = '/';
-    });
   </script>
+
 </body>
 </html>

@@ -25,18 +25,23 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch(err => console.log('Error connecting to MongoDB:', err));
 
 const User = require('./models/User');
-
 const authenticate = require('./middleware/authenticate');
 const kyleRoutes = require('./routes/kyleRoutes');
+const locationRoutes = require('./routes/locationRoutes');
+
 app.use('/api/kyle', kyleRoutes);
+app.use('/api', locationRoutes);
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'login.html')));
 app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'public', 'register.html')));
 app.get('/kyle', authenticate, (req, res) => res.sendFile(path.join(__dirname, 'public', 'kyle.html')));
+app.get('/map', authenticate, (req, res) => res.sendFile(path.join(__dirname, 'public', 'map.html')));
+app.get('/dm', authenticate, (req, res) => res.sendFile(path.join(__dirname, 'public', 'dm.html')));
 
 app.post('/api/register', async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) return res.status(400).json({ message: 'All fields are required' });
+  
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ name, email, password: hashedPassword });
@@ -50,11 +55,14 @@ app.post('/api/register', async (req, res) => {
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) return res.status(400).json({ message: 'All fields are required' });
+  
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(401).json({ message: 'Invalid credentials' });
+    
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
+    
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.status(200).json({ message: 'Login successful', token });
   } catch (error) {
@@ -62,20 +70,16 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-app.get('/map', authenticate, (req, res) => res.sendFile(path.join(__dirname, 'public', 'map.html')));
-app.get('/dm', authenticate, (req, res) => res.sendFile(path.join(__dirname, 'public', 'dm.html')));
-
-const locationRoutes = require('./routes/locationRoutes');
-app.use('/api', locationRoutes);
-
 io.on('connection', socket => {
   socket.on('disconnect', () => {});
+  
   socket.on('sendMessage', message => io.emit('receiveMessage', message));
 });
 
 app.post('/api/kyle/ask-kyle', async (req, res) => {
   const { message } = req.body;
   if (!message) return res.status(400).json({ message: 'Message is required' });
+  
   try {
     const response = await axios.post(
       'https://api-inference.huggingface.co/models/gpt2',
@@ -87,6 +91,7 @@ app.post('/api/kyle/ask-kyle', async (req, res) => {
         }
       }
     );
+    
     const answer = response.data.generated_text.trim();
     res.status(200).json({ response: answer });
   } catch (error) {
