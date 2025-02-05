@@ -1,55 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Trakzer App</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Trakzer</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="login-container">
-    <h2>Login to Trakzer</h2>
-    <form id="login-form">
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="password" placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="/register">Register</a></p>
-    <div id="error-message" style="color: red; display: none;"></div>
-  </div>
-
-  <footer>
-    <p>&copy; 2025 Trakzer App</p>
-  </footer>
-
-  <script>
-    document.getElementById('login-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.message === 'Login successful') {
-          localStorage.setItem('token', data.token);
-          window.location.href = '/map'; // Redirect to map page after login
-        } else {
-          document.getElementById('error-message').style.display = 'block';
-          document.getElementById('error-message').textContent = data.message || 'Login failed';
-        }
-      })
-      .catch(error => {
-        document.getElementById('error-message').style.display = 'block';
-        document.getElementById('error-message').textContent = 'Error: ' + error.message;
-      });
-    });
-  </script>
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="register.html">Sign up</a></p>
+        </div>
+    </div>
+    <script src="app.js"></script>
 </body>
 </html>

@@ -208,13 +208,4 @@ button i {
 }
 
 .chat-send-btn:active {
-    transform: scale(0.98);
-}
-
-.create-post button:active {
-    transform: scale(0.98);
-}
-
-button:active {
-    transform: scale(0.98);
-}
+    transform: sc

@@ -3,34 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Trakzer</title>
+    <title>Trakzer - Home</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <h1>Welcome to Trakzer</h1>
     </header>
-    
-    <div class="sidebar">
+
+    <nav>
         <ul>
-            <li><i class="fas fa-home"></i> Home</li>
-            <li><i class="fas fa-comments"></i> Chats</li>
-            <li><i class="fas fa-users"></i> Friends</li>
-            <li><i class="fas fa-cogs"></i> Settings</li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="trakzershop.html">TrakzerShop</a></li>
+            <li><a href="map.html">Maps</a></li>
         </ul>
-    </div>
+    </nav>
 
     <div class="main-content">
-        <div class="create-post">
-            <textarea placeholder="What's on your mind?" id="postTextarea"></textarea>
-            <button onclick="createPost()">Post</button>
-        </div>
-
-        <div id="postContainer">
-            <!-- Dynamically generated posts will appear here -->
-        </div>
+        <h2>Welcome to the homepage!</h2>
+        <p>Start your journey here.</p>
     </div>
-    
-    <script src="script.js"></script>
 </body>
 </html>
