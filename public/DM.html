@@ -3,35 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Direct Messages - Trakzer</title>
+    <title>Direct Messages</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Trakzer - Direct Messages</h1>
+        <h1>Direct Messages</h1>
     </header>
-    <div class="sidebar">
-        <ul>
-            <li><a href="#">Chats</a></li>
-            <li><a href="#">Groups</a></li>
-            <li><a href="#">Friends</a></li>
-            <li><a href="/kyle">Kyle</a></li>
-        </ul>
-    </div>
-    <div class="main-content">
-        <h2>Direct Messages</h2>
-        <p>Select a chat to start messaging.</p>
-        <div class="chat-list">
-            <div class="chat-item">
-                <p><strong>John Doe:</strong> Hey, how are you?</p>
-            </div>
-            <div class="chat-item">
-                <p><strong>Jane Smith:</strong> Are we meeting up later?</p>
-            </div>
-            <div class="chat-item">
-                <p><strong>Mike Davis:</strong> Can you send me the report?</p>
-            </div>
+    <main>
+        <div id="messageContainer"></div>
+        <textarea id="messageInput" placeholder="Type a message"></textarea>
+        <button id="sendMessageBtn">Send</button>
+        <div id="kyleChat">
+            <textarea id="kyleInput" placeholder="Talk to Kyle..."></textarea>
+            <button id="kyleSendBtn">Ask Kyle</button>
+            <div id="kyleResponse"></div>
         </div>
-    </div>
+    </main>
+    <script src="socket.io.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

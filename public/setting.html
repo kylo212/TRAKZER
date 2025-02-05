@@ -3,26 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trakzer - Settings</title>
+    <title>Settings</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <h1>Settings</h1>
     </header>
-
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="profile.html">Profile</a></li>
-            <li><a href="trakzershop.html">TrakzerShop</a></li>
-            <li><a href="map.html">Maps</a></li>
-        </ul>
-    </nav>
-
-    <div class="main-content">
-        <h2>Modify your settings here</h2>
-        <p>Customize your Trakzer experience.</p>
-    </div>
+    <main>
+        <form>
+            <label for="notification">Enable Notifications:</label>
+            <input type="checkbox" id="notification" name="notification">
+            <button type="submit">Save Settings</button>
+        </form>
+    </main>
 </body>
 </html>

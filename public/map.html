@@ -3,26 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trakzer - Maps</title>
+    <title>Map</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 <body>
     <header>
-        <h1>Trakzer Maps</h1>
+        <h1>Explore the Map</h1>
     </header>
-
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="profile.html">Profile</a></li>
-            <li><a href="settings.html">Settings</a></li>
-            <li><a href="trakzershop.html">TrakzerShop</a></li>
-        </ul>
-    </nav>
-
-    <div class="main-content">
-        <h2>Explore the world with Trakzer maps</h2>
-        <p>View locations and find people nearby.</p>
-    </div>
+    <main>
+        <div id="map" style="height: 500px;"></div>
+    </main>
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    </script>
 </body>
 </html>

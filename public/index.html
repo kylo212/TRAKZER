@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trakzer - Home</title>
+    <title>Trakzer Home</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <h1>Welcome to Trakzer</h1>
+        <nav>
+            <a href="/profile">Profile</a>
+            <a href="/dm">Direct Messages</a>
+            <a href="/map">Map</a>
+            <a href="/trakzershop">TrakzerShop</a>
+            <a href="/setting">Settings</a>
+        </nav>
     </header>
-
-    <nav>
-        <ul>
-            <li><a href="profile.html">Profile</a></li>
-            <li><a href="settings.html">Settings</a></li>
-            <li><a href="trakzershop.html">TrakzerShop</a></li>
-            <li><a href="map.html">Maps</a></li>
-        </ul>
-    </nav>
-
-    <div class="main-content">
-        <h2>Welcome to the homepage!</h2>
-        <p>Start your journey here.</p>
-    </div>
+    <main>
+        <section id="postSection">
+            <h2>Latest Posts</h2>
+            <div id="postContainer"></div>
+            <textarea id="postInput" placeholder="Share something..."></textarea>
+            <button id="postBtn">Post</button>
+        </section>
+    </main>
+    <script src="socket.io.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

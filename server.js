@@ -62,19 +62,14 @@ app.get('/api/messages', messageController.getMessages);
 app.use('/api/posts', postRoutes);
 
 io.on('connection', (socket) => {
-    console.log('New user connected');
-    
     socket.on('sendMessage', (messageData) => {
         io.emit('newMessage', messageData);
     });
 
-    socket.on('disconnect', () => {
-        console.log('User disconnected');
-    });
+    socket.on('disconnect', () => {});
 });
 
 app.use((err, req, res, next) => {
-    console.error('Unexpected Error:', err.stack);
     res.status(500).send('Something went wrong!');
 });
 

@@ -1,16 +1,19 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const User = require('../models/User');
 
-const authenticateToken = (req, res, next) => {
-  const token = req.header('Authorization')?.split(' ')[1];
-  if (!token) return res.status(401).json({ message: 'Access Denied' });
+const authMiddleware = async (req, res, next) => {
+  const token = req.header('Authorization');
+  if (!token) return res.status(401).send('Access denied');
 
-  jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
-    if (err) return res.status(403).json({ message: 'Invalid Token' });
-
-    req.user = await User.findById(user.id);
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(verified.id);
+    if (!user) return res.status(400).send('User not found');
+    req.user = user;
     next();
-  });
+  } catch (err) {
+    res.status(400).send('Invalid token');
+  }
 };
 
-module.exports = { authenticateToken };
+module.exports = authMiddleware;
