@@ -4,9 +4,9 @@ const cors = require('cors');
 const path = require('path');
 const http = require('http');
 const socketIo = require('socket.io');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
@@ -19,9 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.set('strictQuery', false);
 
 const dbURI = process.env.MONGODB_URI;
-if (!dbURI) {
-    process.exit(1);
-}
+if (!dbURI) process.exit(1);
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
@@ -47,11 +45,10 @@ app.use('/api/posts', postRoutes);
 
 io.on('connection', (socket) => {
     socket.on('sendMessage', (messageData) => io.emit('newMessage', messageData));
-    socket.on('disconnect', () => {});
 });
 
-app.use((err, req, res, next) => res.status(500).send('Something went wrong!'));
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+app.use((req, res) => res.status(404).send('Page not found'));
+app.use((err, req, res, next) => res.status(500).send('Something went wrong'));
 
 const port = process.env.PORT || 5000;
-server.listen(port, () => console.log(`Server is running on port ${port}`));
+server.listen(port, () => console.log(`Server running on port ${port}`));

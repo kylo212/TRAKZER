@@ -1,21 +1,19 @@
 const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 
 exports.updateSettings = async (req, res) => {
     try {
         const { username, password } = req.body;
+        const user = await User.findById(req.user.id);
 
-        if (username) {
-            req.user.username = username;
-        }
+        if (!user) return res.status(404).send({ message: 'User not found' });
 
-        if (password) {
-            const hashedPassword = await bcrypt.hash(password, 10);
-            req.user.password = hashedPassword;
-        }
+        if (username) user.username = username;
+        if (password) user.password = await bcrypt.hash(password, 10);
 
-        await req.user.save();
+        await user.save();
         res.status(200).send({ message: 'Settings updated successfully' });
-    } catch (error) {
+    } catch {
         res.status(500).send({ message: 'Error updating settings' });
     }
 };
