@@ -16,7 +16,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-process.removeAllListeners('warning');
 mongoose.set('strictQuery', false);
 
 const dbURI = process.env.MONGODB_URI;
@@ -32,6 +31,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 const messageController = require('./controllers/messageController');
 const postController = require('./controllers/postController');
 const authController = require('./controllers/authController');
+const postRoutes = require('./routes/postRoutes'); 
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -62,8 +62,8 @@ app.post('/api/login', authController.login);
 
 app.post('/api/messages', messageController.createMessage);
 app.get('/api/messages', messageController.getMessages);
-app.post('/api/posts', postController.createPost);
-app.get('/api/posts', postController.getPosts);
+
+app.use('/api/posts', postRoutes); // Add this line to handle post routes
 
 io.on('connection', (socket) => {
     console.log('New user connected');
