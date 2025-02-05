@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -7,6 +6,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
@@ -31,7 +31,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 const messageController = require('./controllers/messageController');
 const postController = require('./controllers/postController');
 const authController = require('./controllers/authController');
-const postRoutes = require('./routes/postRoutes'); 
+const postRoutes = require('./routes/postRoutes');
 
 app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'register.html'));

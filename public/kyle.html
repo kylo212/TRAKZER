@@ -1,42 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kyle the Bot</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyle - Trakzer</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <div class="chat-container">
-    <h2>Talk to Kyle</h2>
-    <div id="chat-box" class="chat-box"></div>
-    <textarea id="user-message" placeholder="Type a message..."></textarea>
-    <button onclick="sendMessage()">Send</button>
-  </div>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <a href="/">Trakzer</a>
+            </div>
+        </div>
+    </header>
 
-  <script>
-    async function sendMessage() {
-      const message = document.getElementById('user-message').value;
-      if (message.trim() === '') return;
+    <div class="main-content">
+        <h1>Kyle</h1>
+        <div id="kyle-chat">
+            <!-- Chatbot interaction will happen here -->
+        </div>
+    </div>
 
-      const chatBox = document.getElementById('chat-box');
-      chatBox.innerHTML += `<div class="user-message">${message}</div>`;
-      document.getElementById('user-message').value = '';
-
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: message }),
-      });
-
-      const data = await response.json();
-      const botReply = data.reply;
-
-      chatBox.innerHTML += `<div class="bot-message">${botReply}</div>`;
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }
-  </script>
+    <footer>
+        <div class="footer-content">
+            <p>Trakzer &copy; 2025</p>
+        </div>
+    </footer>
 </body>
 </html>

@@ -3,24 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Direct Messages</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>DM - Trakzer</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <header>
-        <h1>Direct Messages</h1>
-    </header>
-    <main>
-        <div id="messageContainer"></div>
-        <textarea id="messageInput" placeholder="Type a message"></textarea>
-        <button id="sendMessageBtn">Send</button>
-        <div id="kyleChat">
-            <textarea id="kyleInput" placeholder="Talk to Kyle..."></textarea>
-            <button id="kyleSendBtn">Ask Kyle</button>
-            <div id="kyleResponse"></div>
+        <div class="navbar">
+            <div class="logo">
+                <a href="/">Trakzer</a>
+            </div>
         </div>
-    </main>
-    <script src="socket.io.js"></script>
-    <script src="app.js"></script>
+    </header>
+
+    <div class="main-content">
+        <h1>Direct Messages</h1>
+        <div class="messages">
+            <div class="message">
+                <p>John Doe: Hello, how are you?</p>
+            </div>
+            <div class="message">
+                <p>Jane Smith: Hi! Are you free to chat?</p>
+            </div>
+        </div>
+        <textarea placeholder="Type your message..."></textarea>
+        <button>Send</button>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>Trakzer &copy; 2025</p>
+        </div>
+    </footer>
 </body>
 </html>

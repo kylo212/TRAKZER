@@ -3,24 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Register - Trakzer</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <header>
-        <h1>Create an Account</h1>
+        <div class="navbar">
+            <div class="logo">
+                <a href="/">Trakzer</a>
+            </div>
+        </div>
     </header>
-    <main>
+
+    <div class="main-content">
+        <h1>Create Your Account</h1>
         <form action="/api/register" method="POST">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Register</button>
         </form>
         <p>Already have an account? <a href="/login">Login here</a></p>
-    </main>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>Trakzer &copy; 2025</p>
+        </div>
+    </footer>
 </body>
 </html>
