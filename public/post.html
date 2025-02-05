@@ -1,42 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
-  <title>Trakzer - Create Post</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post - Trakzer</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-  <div class="header">
-    <h1>Trakzer</h1>
-  </div>
-
-  <div class="container">
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="dms.html">DMs</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="marketplace.html">Marketplace</a></li>
-        <li><a href="post.html">Create Post</a></li>
-      </ul>
-    </nav>
-
-    <div id="post" class="page">
-      <h2>Create a Post</h2>
-      <form action="/api/posts" method="POST">
-        <textarea name="content" placeholder="What's on your mind?" rows="4"></textarea><br>
-        <button type="submit">Post</button>
-      </form>
+    <header>
+        <h1>Post Details</h1>
+    </header>
+    
+    <div class="post">
+        <h3>Post Title</h3>
+        <p>This is an example of a detailed post content...</p>
+        <div class="actions">
+            <i class="fas fa-heart"></i>
+            <i class="fas fa-comment"></i>
+        </div>
     </div>
-  </div>
 
-  <div class="footer">
-    <footer>
-      <p>&copy; 2025 Trakzer</p>
-    </footer>
-  </div>
+    <div class="comments">
+        <textarea class="comment-input" placeholder="Add a comment..."></textarea>
+        <button>Add Comment</button>
+    </div>
 
+    <script src="script.js"></script>
 </body>
 </html>

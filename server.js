@@ -53,17 +53,13 @@ app.get('/kyle', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'kyle.html'));
 });
 
-app.get('/map', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'map.html'));
-});
-
 app.post('/api/register', authController.register);
 app.post('/api/login', authController.login);
 
 app.post('/api/messages', messageController.createMessage);
 app.get('/api/messages', messageController.getMessages);
 
-app.use('/api/posts', postRoutes); // Add this line to handle post routes
+app.use('/api/posts', postRoutes);
 
 io.on('connection', (socket) => {
     console.log('New user connected');
