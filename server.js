@@ -33,10 +33,6 @@ const postController = require('./controllers/postController');
 const authController = require('./controllers/authController');
 const postRoutes = require('./routes/postRoutes'); 
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
 app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'register.html'));
 });
@@ -51,6 +47,10 @@ app.get('/dm', (req, res) => {
 
 app.get('/kyle', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'kyle.html'));
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.post('/api/register', authController.register);
@@ -71,6 +71,10 @@ io.on('connection', (socket) => {
 
 app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong!');
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 const port = process.env.PORT || 5000;
