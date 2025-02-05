@@ -20,7 +20,6 @@ mongoose.set('strictQuery', false);
 
 const dbURI = process.env.MONGODB_URI;
 if (!dbURI) {
-    console.error('MONGODB_URI is missing in environment variables');
     process.exit(1);
 }
 
@@ -33,51 +32,26 @@ const postController = require('./controllers/postController');
 const authController = require('./controllers/authController');
 const postRoutes = require('./routes/postRoutes');
 
-app.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'register.html'));
-});
-
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
-
-app.get('/dm', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'dm.html'));
-});
-
-app.get('/kyle', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'kyle.html'));
-});
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'public', 'register.html')));
+app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'public', 'login.html')));
+app.get('/dm', (req, res) => res.sendFile(path.join(__dirname, 'public', 'dm.html')));
+app.get('/kyle', (req, res) => res.sendFile(path.join(__dirname, 'public', 'kyle.html')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
 app.post('/api/register', authController.register);
 app.post('/api/login', authController.login);
-
 app.post('/api/messages', messageController.createMessage);
 app.get('/api/messages', messageController.getMessages);
 
 app.use('/api/posts', postRoutes);
 
 io.on('connection', (socket) => {
-    socket.on('sendMessage', (messageData) => {
-        io.emit('newMessage', messageData);
-    });
-
+    socket.on('sendMessage', (messageData) => io.emit('newMessage', messageData));
     socket.on('disconnect', () => {});
 });
 
-app.use((err, req, res, next) => {
-    res.status(500).send('Something went wrong!');
-});
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+app.use((err, req, res, next) => res.status(500).send('Something went wrong!'));
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
 const port = process.env.PORT || 5000;
-server.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+server.listen(port, () => console.log(`Server is running on port ${port}`));
