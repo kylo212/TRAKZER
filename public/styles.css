@@ -6,11 +6,12 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
     background-color: #eaf1e3;
     display: flex;
     justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 header {
@@ -19,11 +20,15 @@ header {
     padding: 10px 0;
     text-align: center;
     font-size: 24px;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .profile-link img {
     border-radius: 50%;
     cursor: pointer;
+    width: 40px;
+    height: 40px;
 }
 
 .sidebar {
@@ -31,6 +36,11 @@ header {
     background-color: #1f2a34;
     color: white;
     padding-top: 20px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar ul {
@@ -43,23 +53,31 @@ header {
     cursor: pointer;
     display: flex;
     align-items: center;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
 }
 
 .sidebar ul li i {
     margin-right: 10px;
 }
 
+.sidebar ul li:hover {
+    background-color: #2d3a47;
+}
+
 .main-content {
     margin-left: 270px;
     padding: 20px;
-    width: 100%;
+    width: calc(100% - 270px);
+    box-sizing: border-box;
 }
 
 .chat-container {
     background-color: white;
-    padding: 10px;
+    padding: 15px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .chat-bubble {
@@ -67,6 +85,7 @@ header {
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 10px;
+    font-size: 14px;
     width: fit-content;
     font-family: 'Roboto', sans-serif;
 }
@@ -83,6 +102,7 @@ header {
     border-radius: 5px;
     border: 1px solid #ccc;
     margin-top: 10px;
+    font-size: 14px;
 }
 
 .chat-send-btn {
@@ -92,22 +112,31 @@ header {
     border-radius: 5px;
     padding: 10px;
     cursor: pointer;
-    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.chat-send-btn:active {
+    transform: scale(0.98);
 }
 
 .profile {
     text-align: center;
+    margin-top: 30px;
 }
 
 .profile img {
     border-radius: 50%;
     margin-bottom: 10px;
+    width: 100px;
+    height: 100px;
 }
 
 .bio {
     font-style: italic;
     color: #444;
-    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    margin-top: 10px;
 }
 
 button {
@@ -118,10 +147,16 @@ button {
     border-radius: 5px;
     cursor: pointer;
     font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
 }
 
 button i {
     margin-right: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
 }
 
 .create-post textarea {
@@ -132,6 +167,7 @@ button i {
     border: 1px solid #ddd;
     border-radius: 5px;
     resize: none;
+    margin-top: 10px;
 }
 
 .create-post button {
@@ -143,6 +179,11 @@ button i {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.create-post button:hover {
+    background-color: #45a049;
 }
 
 #postContainer .post {
@@ -151,6 +192,7 @@ button i {
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .post h3 {
@@ -171,6 +213,8 @@ button i {
 .actions i {
     margin-right: 20px;
     cursor: pointer;
+    font-size: 16px;
+    transition: color 0.3s ease;
 }
 
 .actions i.liked {
@@ -195,8 +239,24 @@ button i {
     font-family: 'Roboto', sans-serif;
 }
 
-.sidebar ul li:hover {
-    background-color: #2d3a47;
+.comment i {
+    margin-right: 10px;
+}
+
+.comment-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.comment-form button {
+    padding: 8px 15px;
+    font-size: 14px;
+}
+
+.sidebar ul li i {
+    font-size: 20px;
 }
 
 .chat-container .chat-bubble {
@@ -208,4 +268,10 @@ button i {
 }
 
 .chat-send-btn:active {
-    transform: sc
+    transform: scale(0.98);
+}
+
+.profile img {
+    width: 100px;
+    height: 100px;
+}
